@@ -1,0 +1,15 @@
+-- 查询有八次(含)以上乘车记录的人员编号，身份证号，姓名，性别，出生日期。依编号排序。
+-- 请用一条SQL语句实现该查询：
+select pid,card_no,pname,gender,dob
+from passenger p
+where pid in(
+    select pid
+    from ride_record
+    group by pid
+    having count(*)>=8
+)
+order by pid;
+
+
+
+/*  end  of  your code  */

@@ -1,0 +1,13 @@
+-- 查询武汉直达厦门的列车。列出所有车次的信息：车次、始发站、终到站、发车时间、终到时间。依车次排序。
+-- 请用一条SQL语句实现该查询：
+select distinct r.train_no,r.start,r.dest,r.depart,r.arrival from route r 
+join timetable t1 on t1.train_no = r.train_no
+join station s1 on t1.station_name = s1.sname and s1.city = '武汉'
+join timetable t2 on t2.train_no = r.train_no
+join station s2 on t2.station_name = s2.sname and s2.city = '厦门'
+where t1.stop_seq < t2.stop_seq
+order by r.train_no;
+
+
+
+/*  end  of  your code  */

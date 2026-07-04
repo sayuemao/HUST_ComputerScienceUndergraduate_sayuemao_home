@@ -1,0 +1,15 @@
+-- 查询乘车人前5位(依编号为序)的编号，身份证号，以及办理身份证时户籍所在地(命名为origin)。身份证的前6位表达了户籍所在地，所在地精确到区县。
+-- 请用一条SQL语句实现该查询：
+select p.pid,p.card_no,p.pname,
+    (select case when d.prov = d.city then concat(d.prov,d.county)
+            else concat(d.prov,d.city,d.county)
+            end
+     from district d 
+     where d.ac = left(p.card_no,6)) 
+     as origin
+from passenger p
+where p.pid between 1 and 5
+order by p.pid;
+
+
+/*  end  of  your code  */

@@ -1,0 +1,41 @@
+-- 在两个数据库实例中，各有一位乘车人的身份证是有问题的。请根据检验规则，把这个人找出来。
+-- 列出该乘车人的编号、“身份证号”、姓名、性别、出生日期。
+-- 请用一条SQL语句实现该查询：
+select pid ,card_no,pname,gender,dob
+from passenger 
+where substr(card_no,18,1)!=
+    case (
+        cast(substr(card_no,1,1)as unsigned)*7+
+        cast(substr(card_no,2,1)as unsigned)*9+
+        cast(substr(card_no,3,1)as unsigned)*10+
+        cast(substr(card_no,4,1)as unsigned)*5+
+        cast(substr(card_no,5,1)as unsigned)*8+
+        cast(substr(card_no,6,1)as unsigned)*4+
+        cast(substr(card_no,7,1)as unsigned)*2+
+        cast(substr(card_no,8,1)as unsigned)*1+
+        cast(substr(card_no,9,1)as unsigned)*6+
+        cast(substr(card_no,10,1)as unsigned)*3+
+        cast(substr(card_no,11,1)as unsigned)*7+
+        cast(substr(card_no,12,1)as unsigned)*9+
+        cast(substr(card_no,13,1)as unsigned)*10+
+        cast(substr(card_no,14,1)as unsigned)*5+
+        cast(substr(card_no,15,1)as unsigned)*8+
+        cast(substr(card_no,16,1)as unsigned)*4+
+        cast(substr(card_no,17,1)as unsigned)*2
+    )%11
+    when 0 then '1'
+    when 1 then '0'
+    when 2 then 'X'
+    when 3 then '9'
+    when 4 then '8'
+    when 5 then '7'
+    when 6 then '6'
+    when 7 then '5'
+    when 8 then '4'
+    when 9 then '3'
+    when 10 then '2'
+    end
+;
+
+
+/*  end  of  your code  */

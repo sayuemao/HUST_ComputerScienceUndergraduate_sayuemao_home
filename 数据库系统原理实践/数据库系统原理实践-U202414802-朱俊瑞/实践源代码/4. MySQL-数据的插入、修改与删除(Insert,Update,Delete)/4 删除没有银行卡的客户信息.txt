@@ -1,0 +1,10 @@
+use finance1;
+-- 请用一条SQL语句删除client表中没有银行卡的客户信息：
+delete c
+from client c 
+left join bank_card b on b.b_c_id = c.c_id
+where b.b_c_id is null; 
+
+
+
+/* the end of your code */ 

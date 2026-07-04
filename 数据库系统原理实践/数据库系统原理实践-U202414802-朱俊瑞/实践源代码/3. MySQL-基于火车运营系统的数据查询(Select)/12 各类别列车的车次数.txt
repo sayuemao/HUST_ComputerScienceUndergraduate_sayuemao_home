@@ -1,0 +1,25 @@
+ -- 查询车次表中，各种类型的车次数，列出：列车类别，车次数。
+ -- 请用一条SQL语句实现该查询：
+select case left(train_no,1)
+    when 'G' then '高速动车组旅客列车'
+    when 'C' then '城际动车组旅客列车'
+    when 'D' then '动车组旅客列车'
+    when 'Z' then '直达特快旅客列车'
+    when 'T' then '特快旅客列车'
+    when 'K' then '快速旅客列车'
+    when 'L' then '临时旅客列车'
+    when 'Y' then '旅游列车'
+
+    end as 列车类别,
+
+    count(*)as 车次数
+from route
+group by 列车类别
+order by 列车类别
+
+
+
+
+
+
+/*  end  of  your code  */ 

@@ -1,0 +1,37 @@
+-- 已知从武汉没有直达“大理”站的铁路旅客列车，请查询中转方案，要求给出：出发车次，出发车站，出发时间，中转站，中转站到达时间，中转车次，中转出发时间，目的站，到达目的站时间：
+-- （train1, start, depart, transfer, arrival1, train2, restart_station, re_depart, dest, arrival)
+-- 依出发车次和换乘车次排序。
+-- 请用一条SQL语句实现该查询：
+SELECT t1.train_no AS train1,
+       t1.station_name AS start,
+       t1.departure_time AS depart,
+       t1_arr.station_name AS transfer,
+       t1_arr.arrival_time AS arrival1,
+       t2.train_no AS train2,
+       t2.station_name AS restart_station,
+       t2.departure_time AS re_depart,
+       '大理' AS dest,
+       t2_arr.arrival_time AS arrival
+FROM timetable t1
+JOIN station s_start ON t1.station_name = s_start.sname AND s_start.city = '武汉'
+JOIN timetable t1_arr ON t1.train_no = t1_arr.train_no
+                      AND t1_arr.station_name != t1.station_name
+                      AND t1_arr.arrival_time IS NOT NULL
+                      AND t1.stop_seq < t1_arr.stop_seq
+JOIN timetable t2 ON t2.station_name = t1_arr.station_name
+                  AND t2.train_no != t1.train_no
+                  AND t2.departure_time IS NOT NULL
+JOIN timetable t2_arr ON t2.train_no = t2_arr.train_no
+                      AND t2_arr.station_name = '大理'
+                      AND t2_arr.arrival_time IS NOT NULL
+                      AND t2.stop_seq < t2_arr.stop_seq
+WHERE t1.departure_time IS NOT NULL
+  AND t1_arr.arrival_time < t2.departure_time
+ORDER BY train1, train2;
+
+
+
+
+
+
+/*  end  of  your code  */

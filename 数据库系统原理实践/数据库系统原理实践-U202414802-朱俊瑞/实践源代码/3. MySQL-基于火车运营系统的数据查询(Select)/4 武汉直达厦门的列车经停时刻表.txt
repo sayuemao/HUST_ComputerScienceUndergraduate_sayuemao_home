@@ -1,0 +1,18 @@
+-- 查询前一查询结果中，排在最后的那趟列车经停各站的时刻表(从始发站起，到终到站止),列出：站序，站名，到站时间，离站时间。依站序排序。。
+-- 请用一条SQL语句实现该查询：
+select t.stop_seq,t.station_name,t.arrival_time,t.departure_time from timetable t
+where t.train_no =(
+    select distinct r.train_no from route r 
+    join timetable t1 on t1.train_no = r.train_no
+    join station s1 on t1.station_name = s1.sname and s1.city = '武汉'
+    join timetable t2 on t2.train_no = r.train_no
+    join station s2 on t2.station_name = s2.sname and s2.city = '厦门'
+    where t1.stop_seq < t2.stop_seq
+    order by r.train_no desc
+    limit 1
+)
+order by t.stop_seq;
+
+
+
+/*  end  of  your code  */

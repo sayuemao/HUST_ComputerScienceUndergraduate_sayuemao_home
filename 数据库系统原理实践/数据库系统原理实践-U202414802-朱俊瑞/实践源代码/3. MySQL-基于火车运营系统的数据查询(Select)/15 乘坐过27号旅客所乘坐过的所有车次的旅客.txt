@@ -1,0 +1,16 @@
+-- 查询乘坐过27号旅客所乘坐过的所有车次的旅客信息：旅客编号，身份证号，姓名， 性别， 出生日期。依编号排序。
+-- 请用一条SQL语句实现该查询：
+select p.pid,p.card_no,p.pname,p.gender,p.dob
+from passenger p
+where not exists(
+    select 1
+    from ride_record r27
+    where r27.pid = 27
+    and not exists(
+        select 1
+        from ride_record r
+        where r.pid = p.pid and r.train_no = r27.train_no
+    )
+)
+order by p.pid;
+/*  end  of  your code  */

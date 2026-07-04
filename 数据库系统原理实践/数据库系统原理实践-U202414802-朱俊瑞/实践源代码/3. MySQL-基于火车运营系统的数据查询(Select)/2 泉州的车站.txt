@@ -1,0 +1,6 @@
+-- 查询泉州的车站，列出车站编号、站名，依编号排序。
+-- 请用一条SQL语句实现该查询：
+select sid,sname from station where city='泉州' order by sid;
+
+
+/*  end  of  your code  */

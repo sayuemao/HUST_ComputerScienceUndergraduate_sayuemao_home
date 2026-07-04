@@ -1,0 +1,17 @@
+-- 查询福建省只有一趟列车经过的车站，列出站名，所在城市，依车站编号排序。
+-- 请用一条SQL语句实现该查询：
+select s.sname , s.city
+from station s
+join timetable t on s.sname = t.station_name
+join district d on concat(s.city,'市') = d.city
+where d.prov = '福建省'
+group by s.sid,s.sname,s.city
+having count(distinct t.train_no)=1
+order by s.sid;
+
+
+
+
+
+
+/*  end  of  your code  */ 
